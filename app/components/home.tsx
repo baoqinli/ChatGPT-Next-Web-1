@@ -78,7 +78,6 @@ export function useSwitchTheme() {
     const metaDescriptionLight = document.querySelector(
       'meta[name="theme-color"][media*="light"]',
     );
-
     if (config.theme === "auto") {
       metaDescriptionDark?.setAttribute("content", "#151515");
       metaDescriptionLight?.setAttribute("content", "#fafafa");
