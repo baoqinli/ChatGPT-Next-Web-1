@@ -86,6 +86,7 @@ export function NewChat() {
   const { state } = useLocation();
 
   const startChat = (mask?: Mask) => {
+    console.log(mask, "直接开始点击了");
     setTimeout(() => {
       chatStore.newSession(mask);
       navigate(Path.Chat);

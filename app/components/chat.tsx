@@ -652,6 +652,17 @@ export function DeleteImageButton(props: { deleteImage: () => void }) {
 function _Chat() {
   type RenderMessage = ChatMessage & { preview?: boolean };
 
+  useEffect(() => {
+    console.log("代码开始执行");
+    // setTimeout(() => {
+    //   chatStore.newSession(undefined);
+    //   navigate(Path.Chat);
+    //   setTimeout(() => {
+    //     doSubmit('你有什么梦想吗?')
+    //   }, 200);
+    // }, 10);
+  }, []);
+
   const chatStore = useChatStore();
   const session = chatStore.currentSession();
   const config = useAppConfig();
@@ -747,6 +758,7 @@ function _Chat() {
   };
 
   const doSubmit = (userInput: string) => {
+    console.log(userInput, "传递的值");
     if (userInput.trim() === "") return;
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
@@ -821,6 +833,7 @@ function _Chat() {
   // check if should send message
   const onInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // if ArrowUp and no userInput, fill with last input
+    console.log(e);
     if (
       e.key === "ArrowUp" &&
       userInput.length <= 0 &&
@@ -1102,11 +1115,13 @@ function _Chat() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const handlePaste = useCallback(
     async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
       const currentModel = chatStore.currentSession().mask.modelConfig.model;
-      if(!isVisionModel(currentModel)){return;}
+      if (!isVisionModel(currentModel)) {
+        return;
+      }
       const items = (event.clipboardData || window.clipboardData).items;
       for (const item of items) {
         if (item.kind === "file" && item.type.startsWith("image/")) {
