@@ -657,6 +657,7 @@ function _Chat() {
     let params = new URLSearchParams(window.location.search);
     let id = params.get("id");
     console.log(id, "地址栏获取的参数信息");
+    console.log("后面接口好了再放开");
     let url =
       "https://gw.api.yunhairong.com/app-api/ai/user-qipower/get?memberUserId=2";
     if (id) {
