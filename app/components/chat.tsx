@@ -654,6 +654,25 @@ function _Chat() {
 
   useEffect(() => {
     console.log("代码开始执行");
+    let params = new URLSearchParams(window.location.search);
+    let id = params.get("id");
+    console.log(id, "地址栏获取的参数信息");
+    let url =
+      "https://gw.api.yunhairong.com/app-api/ai/user-qipower/get?memberUserId=2";
+    if (id) {
+      setTimeout(() => {
+        chatStore.newSession(undefined);
+        navigate(Path.Chat);
+        setTimeout(() => {
+          doSubmit("你有什么梦想吗?");
+        }, 200);
+      }, 10);
+      // fetch(url)
+      //   .then(response => response.json())
+      //   .then(data => console.log(data, '接口返回的信息'))
+      //   .catch(error => console.error('Error:', error));
+    }
+
     // setTimeout(() => {
     //   chatStore.newSession(undefined);
     //   navigate(Path.Chat);
