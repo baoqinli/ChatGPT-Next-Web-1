@@ -42,7 +42,7 @@ export function Typehome() {
         lang: "cn",
         builtin: true,
         createdAt: 1688899480536,
-        id: 100008,
+        id: "100008",
       });
       navigate(Path.Chat);
     }, 10);

@@ -668,13 +668,49 @@ function _Chat() {
         .then((data) => {
           console.log("接口返回的信息", data);
           let str: string = data.data.description;
+          let title: string = data.data.title;
+          let reply: string = data.data.reply;
           if (data.code === 0) {
             setTimeout(() => {
-              chatStore.newSession(undefined);
+              chatStore.newSession({
+                avatar: "1f4d1",
+                name: title ? title : "新的聊天",
+                context: [
+                  {
+                    id: "cv-0",
+                    role: "user",
+                    content: str ? str : "您好",
+                    date: "",
+                  },
+                  {
+                    id: "cv-1",
+                    role: "assistant",
+                    content: reply ? reply : "您好,您有什么想了解的吗?",
+                    date: "",
+                  },
+                ],
+                modelConfig: {
+                  model: "gpt-3.5-turbo",
+                  temperature: 0.5,
+                  top_p: 1,
+                  max_tokens: 2000,
+                  presence_penalty: 0,
+                  frequency_penalty: 0,
+                  sendMemory: true,
+                  historyMessageCount: 4,
+                  compressMessageLengthThreshold: 1000,
+                  enableInjectSystemPrompts: true,
+                  template: "{{input}}",
+                },
+                lang: "cn",
+                builtin: true,
+                createdAt: 1688899480536,
+                id: "100008",
+              });
               navigate(Path.Chat);
-              setTimeout(() => {
-                doSubmit(str);
-              }, 200);
+              // setTimeout(() => {
+              //   doSubmit(str);
+              // }, 200);
             }, 10);
           }
           return;
