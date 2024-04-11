@@ -690,7 +690,7 @@ function _Chat() {
                   },
                 ],
                 modelConfig: {
-                  model: "gpt-3.5-turbo",
+                  model: "gpt-4",
                   temperature: 0.5,
                   top_p: 1,
                   max_tokens: 2000,
