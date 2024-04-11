@@ -654,24 +654,38 @@ function _Chat() {
 
   useEffect(() => {
     console.log("代码开始执行");
-    let params = new URLSearchParams(window.location.search);
-    let id = params.get("id");
-    console.log(id, "地址栏获取的参数信息");
-    console.log("后面接口好了再放开");
+    const queryString = window.location.hash.split("?")[1]; // 获取哈希值中的查询字符串部分
+    const params = new URLSearchParams(queryString); // 解析查询字符串
+    let id = params.get("id"); // 返回特定的查询参数值
+    console.log("获取到的id", id);
     let url =
-      "https://gw.api.yunhairong.com/app-api/ai/user-qipower/get?memberUserId=2";
+      "https://gw.api.yunhairong.com/app-api/ai/homepage-application/get?id=" +
+      id;
     if (id) {
-      setTimeout(() => {
-        chatStore.newSession(undefined);
-        navigate(Path.Chat);
-        setTimeout(() => {
-          doSubmit("你有什么梦想吗?");
-        }, 200);
-      }, 10);
-      // fetch(url)
-      //   .then(response => response.json())
-      //   .then(data => console.log(data, '接口返回的信息'))
-      //   .catch(error => console.error('Error:', error));
+      console.log("发起请求");
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("接口返回的信息", data);
+          let str: string = data.data.description;
+          if (data.code === 0) {
+            setTimeout(() => {
+              chatStore.newSession(undefined);
+              navigate(Path.Chat);
+              setTimeout(() => {
+                doSubmit(str);
+              }, 200);
+            }, 10);
+          }
+          return;
+          setTimeout(() => {
+            navigate(Path.Chat);
+            setTimeout(() => {
+              doSubmit("你有什么梦想吗?");
+            }, 200);
+          }, 10);
+        })
+        .catch((error) => console.error("Error:", error));
     }
 
     // setTimeout(() => {
